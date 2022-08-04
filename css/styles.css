@@ -691,10 +691,10 @@ p {
   }
   .menu-nav ul li .nav-link.active {
     border-radius: 0;
-    background: #F57F17;
+    background: #F9A825;
   }
   .nav-link {
-    background: #F57F17;
+    background: #F9A825;
   }
   .headline {
     flex-direction: column;
