@@ -2,6 +2,11 @@
 const overlay = document.querySelector('.ring-bg');
 const count = document.querySelector('.ring-count');
 const target = +count.getAttribute('data-target');
+const btnSubmit = document.querySelector('.btn');
+
+window.addEventListener('click',function(e){
+  console.log(e.target)
+})
 
 function countTo() {
   let from = +count.innerText;

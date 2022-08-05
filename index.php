@@ -40,7 +40,9 @@ if (isset($_POST['nome']) && isset($_POST['email']) && isset($_POST['telefone'])
       $mail = new PHPMailer(true);
 
       try {
-        $mail->isSMTP();                                            //Send using SMTP
+        $mail->isSMTP();   //Send using SMTP        
+        $mail->CharSet = 'UTF-8';
+        $mail->Encoding = 'base64';                                 
         $mail->Host       = 'smtp.gmail.com';                     //Set the SMTP server to send through
         $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
         $mail->Username   = 'nathan.maia99@gmail.com';                     //SMTP username
@@ -52,7 +54,6 @@ if (isset($_POST['nome']) && isset($_POST['email']) && isset($_POST['telefone'])
         $mail->addAddress($email, $nome, 0);     //Add a recipient
         //Content
         $mail->isHTML(true); //CORPO do email com HTML
-        $mail->CharSet = 'UTF-8';
         $mail->Subject = 'Atendimento ao cliente!'; //titulo do email
         $mail->Body    = 'Olá ' . $nome . '! <br><br>
         Obrigado por entrar em contato conosco!<br><br>
@@ -69,16 +70,13 @@ if (isset($_POST['nome']) && isset($_POST['email']) && isset($_POST['telefone'])
 
 
         $mail->send();
-        $_POST['nome'] = null;
-        $_POST['email'] = null;
-        $_POST['telefone'] = null;
+        $_POST['nome'] = '';
+        $_POST['email'] = '';
+        $_POST['telefone'] = '';
 
       } catch (Exception $e) {
         echo "Houve um problema ao enviar e-mail de confirmação: {$mail->ErrorInfo}";
       }
-    } else {
-      // deu erro
-
     }
   }
 }
