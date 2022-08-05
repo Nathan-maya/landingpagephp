@@ -1,5 +1,6 @@
 <?php
 require_once('class/config.php');
+require_once('Formulario.php');
 require_once('autoload.php');
 
 if (isset($_POST['nome']) && isset($_POST['email']) && isset($_POST['telefone']) && isset($_POST['mensagem'])) {
