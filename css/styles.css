@@ -226,7 +226,7 @@ p {
   font-size: 2rem;
   font-weight: 900;
 }
-.headline-form a {
+.headline-form .btn {
   color: #FCF8F2;
   text-align: center;
   margin: 20px 0 20px 0;
@@ -235,8 +235,11 @@ p {
   padding: 10px 30px;
   background: #F57F17;
   border-radius: 5px;
+  border: none;
+  transition: 0.5s;
+  cursor: pointer;
 }
-.headline-form a:hover {
+.headline-form .btn:hover {
   color: #F57F17;
   background: #000;
 }
@@ -291,6 +294,35 @@ p {
 }
 .headline-form-group textarea:focus {
   border: 2px solid #F57F17;
+}
+
+.erro-geral {
+  background: #F57F17;
+  color: white;
+  font-weight: bold;
+  padding: 20px;
+  border-radius: 5px;
+  margin-bottom: 15px;
+}
+
+.erro-input {
+  border: 1px solid #F57F17;
+}
+
+.erro {
+  color: #F57F17;
+  font-weight: bold;
+  font-size: 14px;
+  margin-top: 10px;
+}
+
+.sucesso {
+  background: #2ac874;
+  color: white;
+  font-weight: bold;
+  padding: 20px;
+  border-radius: 5px;
+  margin-bottom: 15px;
 }
 
 .sobre {
