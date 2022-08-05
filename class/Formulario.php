@@ -32,10 +32,11 @@ class Formulario extends Crud
 
       // O número não foi validado.
       $this->erro["erro_telefone"] = "O número de telefone está incorreto!";
-    } else {
-
-      // Telefone válido.
-      return true;
+    } 
+    if(strlen($this->telefone) > 11){
+      $this->erro["erro_telefone"] = "Por favor, insira somente 11 digitos ";
+    }else{
+      echo strlen($this->telefone);
     }
   }
 

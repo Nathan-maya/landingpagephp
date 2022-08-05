@@ -2,6 +2,7 @@
 require_once('class/config.php');
 require_once('class/Formulario.php');
 require_once('autoload.php');
+
 // REQUERIMENTO DO PHPMAILER
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
@@ -43,15 +44,15 @@ if (isset($_POST['nome']) && isset($_POST['email']) && isset($_POST['telefone'])
         $mail->Username   = 'nathan.maia99@gmail.com';                     //SMTP username
         $mail->Password   = 'fnxbogfwrjvjdkid';                               //SMTP password
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
-        $mail->Port       = 465;   
+        $mail->Port       = 465;
         //Recipients
         $mail->setFrom('nathan.maia99@gmail.com', 'Mensagem do Cliente'); //qm esta mandando email
-        $mail->addAddress($email,$nome,0);     //Add a recipient
+        $mail->addAddress($email, $nome, 0);     //Add a recipient
         //Content
         $mail->isHTML(true); //CORPO do email com HTML
         $mail->CharSet = 'UTF-8';
         $mail->Subject = 'Atendimento ao cliente!'; //titulo do email
-        $mail->Body    = 'Olá '.$nome.'! <br><br>
+        $mail->Body    = 'Olá ' . $nome . '! <br><br>
         Obrigado por entrar em contato conosco!<br><br>
         Logo, um de nossos atendentes irá responder sua mensagem.<br><br>
         
@@ -99,12 +100,12 @@ if (isset($_POST['nome']) && isset($_POST['email']) && isset($_POST['telefone'])
 </head>
 
 <body>
-  <div class="ring-bg">
-      <div class="ring">
-        <div class="ring-count" data-target="100" ></div>
-        <span class="ring-span"></span>
-      </div>
+  <!-- <div class="ring-bg">
+    <div class="ring">
+      <div class="ring-count" data-target="100"></div>
+      <span class="ring-span"></span>
     </div>
+  </div> -->
 
 
 
@@ -179,9 +180,9 @@ if (isset($_POST['nome']) && isset($_POST['email']) && isset($_POST['telefone'])
 
           </div>
           <div class="headline-form-group">
-            <input <?php if (isset($usuario->erro["erro_telefone"]) or isset($erro_geral)) {
-                      echo $erro_geral;
-                    } ?>type="text" name="telefone" placeholder=" " class="headline-form-group-input" required <?php if (isset($_POST['telefone'])) {
+            <input id="celular" maxlength="11" <?php if (isset($usuario->erro["erro_telefone"]) or isset($erro_geral)) {
+                                  echo $erro_geral;
+                                } ?>type="text" name="telefone" placeholder=" " class="headline-form-group-input" required <?php if (isset($_POST['telefone'])) {
                                                                                                                   echo "value=" .
                                                                                                                     $_POST['telefone'] . "";
                                                                                                                 } ?> />
@@ -380,8 +381,11 @@ if (isset($_POST['nome']) && isset($_POST['email']) && isset($_POST['telefone'])
   <script src="js/scrollspy.js"></script>
   <script src="js/scrollSuave.js"></script>
   <script src="js/menu.js"></script>
+  <script src="js/jquery-3.6.0.min.js"></script>
+  <script src="js/jquery.mask.js"></script>
+  <script>
+    $("#celular").mask("(00) 00000-0000")
+  </script>
 </body>
-
-</html>y>
 
 </html>
