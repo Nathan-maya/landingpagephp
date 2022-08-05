@@ -29,14 +29,10 @@ class Formulario extends Crud
     $regex = '/^(?:(?:\+|00)?(55)\s?)?(?:\(?([1-9][0-9])\)?\s?)?(?:((?:9\d|[2-9])\d{3})\-?(\d{4}))$/';
 
     if (preg_match($regex, $this->telefone) == false) {
-
-      // O número não foi validado.
       $this->erro["erro_telefone"] = "O número de telefone está incorreto!";
     } 
-    if(strlen($this->telefone) > 11){
+    if(strlen($this->telefone) > 12 && strlen($this->telefone) < 12){
       $this->erro["erro_telefone"] = "Por favor, insira somente 11 digitos ";
-    }else{
-      echo strlen($this->telefone);
     }
   }
 

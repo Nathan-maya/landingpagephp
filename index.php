@@ -17,13 +17,15 @@ if (isset($_POST['nome']) && isset($_POST['email']) && isset($_POST['telefone'])
   $nome = limpaPost($_POST['nome']);
   $email = limpaPost($_POST['email']);
   $telefone = limpaPost($_POST['telefone']);
+  $telefone = str_replace('(','',$telefone);
+  $telefone = str_replace(')','',$telefone);
+  $telefone = str_replace('-','',$telefone);
   $mensagem = limpaPost($_POST['mensagem']);
 
 
   //Verificar se os valores do post estão vazios
   if (empty($nome) || empty($email) || empty($telefone) || empty($mensagem)) {
     $erro_geral = "Todos os campos são obrigatórios";
-    echo "TA VAZIO VEI!";
   } else {
     //Instanciar a classe Formulario
     $cliente = new Formulario($nome, $email, $telefone, $mensagem);
@@ -67,7 +69,11 @@ if (isset($_POST['nome']) && isset($_POST['email']) && isset($_POST['telefone'])
 
 
         $mail->send();
-        // header('location: index.php');
+
+        $_POST['nome'] = '';
+        $_POST['email'] = '';
+        $_POST['telefone'] = '';
+
       } catch (Exception $e) {
         echo "Houve um problema ao enviar e-mail de confirmação: {$mail->ErrorInfo}";
       }
@@ -100,12 +106,12 @@ if (isset($_POST['nome']) && isset($_POST['email']) && isset($_POST['telefone'])
 </head>
 
 <body>
-  <!-- <div class="ring-bg">
+  <div class="ring-bg">
     <div class="ring">
       <div class="ring-count" data-target="100"></div>
       <span class="ring-span"></span>
     </div>
-  </div> -->
+  </div>
 
 
 
@@ -180,7 +186,7 @@ if (isset($_POST['nome']) && isset($_POST['email']) && isset($_POST['telefone'])
 
           </div>
           <div class="headline-form-group">
-            <input id="celular" maxlength="11" <?php if (isset($usuario->erro["erro_telefone"]) or isset($erro_geral)) {
+            <input id="celular" maxlength="12" <?php if (isset($usuario->erro["erro_telefone"]) or isset($erro_geral)) {
                                   echo $erro_geral;
                                 } ?>type="text" name="telefone" placeholder=" " class="headline-form-group-input" required <?php if (isset($_POST['telefone'])) {
                                                                                                                   echo "value=" .
@@ -386,7 +392,7 @@ if (isset($_POST['nome']) && isset($_POST['email']) && isset($_POST['telefone'])
   <script src="js/jquery-3.6.0.min.js"></script>
   <script src="js/jquery.mask.js"></script>
   <script>
-    $("#celular").mask("(00) 00000-0000")
+    $("#celular").mask("(00)00000-0000")
   </script>
 </body>
 
