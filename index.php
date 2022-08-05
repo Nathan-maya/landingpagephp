@@ -38,14 +38,14 @@ if (isset($_POST['nome']) && isset($_POST['email']) && isset($_POST['telefone'])
       try {
         //Recipients
         $mail->setFrom('sistema@emailsistema.com', 'Sitema de Login'); //qm esta mandando email
-        $mail->addAddress('$email',$nome);     //Add a recipient
+        $mail->addAddress($email,$nome,0);     //Add a recipient
         //Content
         $mail->isHTML(true); //CORPO do email com HTML
         $mail->Subject = 'Confirme seu cadastro!'; //titulo do email
         $mail->Body    = '<h1>Por favor confirme seu e-mail abaixo</h1><br><br><a style ="background:green;color:white;padding:20px;border-radius:5px;text-decoration:none;"href="https://seusistema.com.br/confirmacao.php?cod_confirm=' . "'>Confirmar E-mail</a>";
 
         $mail->send();
-        header('location: index.php');
+        // header('location: index.php');
       } catch (Exception $e) {
         echo "Houve um problema ao enviar e-mail de confirmação: {$mail->ErrorInfo}";
       }
