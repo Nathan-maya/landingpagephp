@@ -49,11 +49,13 @@ if (isset($_POST['nome']) && isset($_POST['email']) && isset($_POST['telefone'])
         $mail->addAddress($email,$nome,0);     //Add a recipient
         //Content
         $mail->isHTML(true); //CORPO do email com HTML
-        $mail->Subject = 'Confirme seu cadastro!'; //titulo do email
+        $mail->CharSet = 'UTF-8';
+        $mail->Subject = 'Atendimento ao cliente!'; //titulo do email
         $mail->Body    = "Mensagem enviada através do site Design, segue as informações abaixo: <br>
         Nome: ".$nome."<br>
         E-mail: ".$email."<br>
         Mensagem: ".$mensagem."";
+
 
         $mail->send();
         // header('location: index.php');
