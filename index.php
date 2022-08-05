@@ -35,7 +35,6 @@ if (isset($_POST['nome']) && isset($_POST['email']) && isset($_POST['telefone'])
       //inserir
       $cliente->insert();
       $mail = new PHPMailer(true);
-      echo $mail;
       try {
         //Recipients
         $mail->setFrom('sistema@emailsistema.com', 'Sitema de Login'); //qm esta mandando email
