@@ -2,6 +2,12 @@
 require_once('class/config.php');
 require_once('class/Formulario.php');
 require_once('autoload.php');
+// REQUERIMENTO DO PHPMAILER
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
+require 'config/PHPMailer/src/Exception.php';
+require 'config/PHPMailer/src/SMTP.php';
 
 if (isset($_POST['nome']) && isset($_POST['email']) && isset($_POST['telefone']) && isset($_POST['mensagem'])) {
 
@@ -27,7 +33,21 @@ if (isset($_POST['nome']) && isset($_POST['email']) && isset($_POST['telefone'])
     if (empty($cliente->erro)) {
       //inserir
       $cliente->insert();
-      header('location: index.php');
+      $mail = new PHPMailer(true);
+      try {
+        //Recipients
+        $mail->setFrom('sistema@emailsistema.com', 'Sitema de Login'); //qm esta mandando email
+        $mail->addAddress('$email', $nome);     //Add a recipient
+        //Content
+        $mail->isHTML(true); //CORPO do email com HTML
+        $mail->Subject = 'Confirme seu cadastro!'; //titulo do email
+        $mail->Body    = '<h1>Por favor confirme seu e-mail abaixo</h1><br><br><a style ="background:green;color:white;padding:20px;border-radius:5px;text-decoration:none;"href="https://seusistema.com.br/confirmacao.php?cod_confirm=' . $codigo_confirmacao . "'>Confirmar E-mail</a>";
+
+        $mail->send();
+        header('location: obrigado.php');
+      } catch (Exception $e) {
+        echo "Houve um problema ao enviar e-mail de confirmação: {$mail->ErrorInfo}";
+      }
     } else {
       // deu erro
 

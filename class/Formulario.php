@@ -44,6 +44,5 @@ class Formulario extends Crud
     $sql = "INSERT INTO $this->tabela values (null,?,?,?,?)";
     $sql = DB::prepare($sql);
     return $sql->execute(array($this->nome, $this->email, $this->telefone, $this->mensagem));
-    echo 'erro no insert';
   }
 }
