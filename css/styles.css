@@ -13,10 +13,10 @@ p {
 
 .ring-bg {
   position: fixed;
-  z-index: 999;
   width: 100%;
   height: 100%;
   background: #F57F17;
+  z-index: 2000;
 }
 
 .ring {
@@ -37,7 +37,6 @@ p {
   text-transform: uppercase;
   text-shadow: 0 0 10px #FCF8F2;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
-  z-index: 2000;
 }
 .ring-span {
   display: block;
@@ -96,7 +95,7 @@ p {
   position: fixed;
   width: 100%;
   background: #F57F17;
-  z-index: 999;
+  z-index: 100;
   padding-top: 20px;
   padding-bottom: 20px;
 }
@@ -117,7 +116,7 @@ p {
   position: fixed;
   width: 100%;
   top: 60px;
-  z-index: 999;
+  z-index: 100;
   background: #F9A825;
 }
 
@@ -772,6 +771,7 @@ p {
   }
   .chamada-acao {
     flex: 1 1 100%;
+    background: red;
   }
 }
 

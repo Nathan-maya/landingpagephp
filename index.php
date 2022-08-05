@@ -51,11 +51,11 @@ if (isset($_POST['nome']) && isset($_POST['email']) && isset($_POST['telefone'])
         $mail->isHTML(true); //CORPO do email com HTML
         $mail->CharSet = 'UTF-8';
         $mail->Subject = 'Atendimento ao cliente!'; //titulo do email
-        $mail->Body    = 'Olá '.$nome.'! <br>
-        Obrigado por entrar em contato conosco!<br>
-        Logo, um de nossos atendentes irá responder sua mensagem.
+        $mail->Body    = 'Olá '.$nome.'! <br><br>
+        Obrigado por entrar em contato conosco!<br><br>
+        Logo, um de nossos atendentes irá responder sua mensagem.<br><br>
         
-        Atenciosamente,
+        Atenciosamente,<br><br>
         
         Equipe Design.';
 
