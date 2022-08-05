@@ -45,13 +45,15 @@ if (isset($_POST['nome']) && isset($_POST['email']) && isset($_POST['telefone'])
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
         $mail->Port       = 465;   
         //Recipients
-        $mail->setFrom('nathan.maia99@gmail.com', 'Sitema de Login'); //qm esta mandando email
+        $mail->setFrom('nathan.maia99@gmail.com', 'Mensagem do Cliente'); //qm esta mandando email
         $mail->addAddress($email,$nome,0);     //Add a recipient
-
         //Content
         $mail->isHTML(true); //CORPO do email com HTML
         $mail->Subject = 'Confirme seu cadastro!'; //titulo do email
-        $mail->Body    = '<h1>Por favor confirme seu e-mail abaixo</h1><br><br><a style ="background:green;color:white;padding:20px;border-radius:5px;text-decoration:none;"href="https://seusistema.com.br/confirmacao.php?cod_confirm=' . "'>Confirmar E-mail</a>";
+        $mail->Body    = "Mensagem enviada através do site Design, segue as informações abaixo: <br>
+        Nome: ".$nome."<br>
+        E-mail: ".$email."<br>
+        Mensagem: ".$mensagem."";
 
         $mail->send();
         // header('location: index.php');
