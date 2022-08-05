@@ -26,8 +26,10 @@ if (isset($_POST['nome']) && isset($_POST['email']) && isset($_POST['telefone'])
     if (empty($cliente->erro)) {
       //inserir
       $cliente->insert();
+      header('location: index.php');
     } else {
       // deu erro
+
     }
   }
 }
