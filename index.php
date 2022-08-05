@@ -69,10 +69,9 @@ if (isset($_POST['nome']) && isset($_POST['email']) && isset($_POST['telefone'])
 
 
         $mail->send();
-
-        $_POST['nome'] = '';
-        $_POST['email'] = '';
-        $_POST['telefone'] = '';
+        $_POST['nome'] = null;
+        $_POST['email'] = null;
+        $_POST['telefone'] = null;
 
       } catch (Exception $e) {
         echo "Houve um problema ao enviar e-mail de confirmação: {$mail->ErrorInfo}";
@@ -166,7 +165,7 @@ if (isset($_POST['nome']) && isset($_POST['email']) && isset($_POST['telefone'])
                     } ?> name="nome" type="text" placeholder=" " class="headline-form-group-input" required <?php if (isset($_POST['nome'])) {
                                                                                                               echo "value=" .
                                                                                                                 $_POST['nome'] . "";
-                                                                                                            } ?> />
+                                                                                                            } ?> >
             <label class="headline-form-group-label">NOME</label>
             <div class="erro"><?php if (isset($cliente->erro["erro_nome"])) {
                                 echo $cliente->erro["erro_nome"];
@@ -178,7 +177,7 @@ if (isset($_POST['nome']) && isset($_POST['email']) && isset($_POST['telefone'])
                     } ?>type="email" name="email" placeholder=" " class=" headline-form-group-input" required <?php if (isset($_POST['email'])) {
                                                                                                                 echo "value=" .
                                                                                                                   $_POST['email'] . "";
-                                                                                                              } ?> />
+                                                                                                              } ?> >
             <label class="headline-form-group-label">E-MAIL: </label>
             <div class="erro"><?php if (isset($cliente->erro["erro_email"])) {
                                 echo $cliente->erro["erro_email"];
@@ -191,7 +190,7 @@ if (isset($_POST['nome']) && isset($_POST['email']) && isset($_POST['telefone'])
                                 } ?>type="text" name="telefone" placeholder=" " class="headline-form-group-input" required <?php if (isset($_POST['telefone'])) {
                                                                                                                   echo "value=" .
                                                                                                                     $_POST['telefone'] . "";
-                                                                                                                } ?> />
+                                                                                                                } ?> >
             <label class="headline-form-group-label">DDD + TELEFONE: </label>
             <div class="erro"><?php if (isset($cliente->erro["erro_telefone"])) {
                                 echo $cliente->erro["erro_telefone"];
