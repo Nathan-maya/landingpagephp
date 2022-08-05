@@ -35,10 +35,19 @@ if (isset($_POST['nome']) && isset($_POST['email']) && isset($_POST['telefone'])
       //inserir
       $cliente->insert();
       $mail = new PHPMailer(true);
+
       try {
+        $mail->isSMTP();                                            //Send using SMTP
+        $mail->Host       = 'smtp.gmail.com';                     //Set the SMTP server to send through
+        $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
+        $mail->Username   = 'nathan.maia99@gmail.com';                     //SMTP username
+        $mail->Password   = 'fnxbogfwrjvjdkid';                               //SMTP password
+        $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
+        $mail->Port       = 465;   
         //Recipients
-        $mail->setFrom('sistema@emailsistema.com', 'Sitema de Login'); //qm esta mandando email
+        $mail->setFrom('nathan.maia99@gmail.com', 'Sitema de Login'); //qm esta mandando email
         $mail->addAddress($email,$nome,0);     //Add a recipient
+
         //Content
         $mail->isHTML(true); //CORPO do email com HTML
         $mail->Subject = 'Confirme seu cadastro!'; //titulo do email
