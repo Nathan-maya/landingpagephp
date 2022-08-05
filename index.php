@@ -38,7 +38,7 @@ if (isset($_POST['nome']) && isset($_POST['email']) && isset($_POST['telefone'])
       try {
         //Recipients
         $mail->setFrom('sistema@emailsistema.com', 'Sitema de Login'); //qm esta mandando email
-        $mail->addAddress($email, $nome);     //Add a recipient
+        $mail->addAddress($email);     //Add a recipient
         //Content
         $mail->isHTML(true); //CORPO do email com HTML
         $mail->Subject = 'Confirme seu cadastro!'; //titulo do email
