@@ -193,9 +193,10 @@ if (isset($_POST['nome']) && isset($_POST['email']) && isset($_POST['telefone'])
 
           </div>
           <div class="headline-form-group">
-            <textarea <?php if (isset($usuario->erro["erro_mensagem"]) or isset($erro_geral)) {
+            <textarea id="mensagem" maxlength="500" <?php if (isset($usuario->erro["erro_mensagem"]) or isset($erro_geral)) {
                         echo $erro_geral;
                       } ?>name="mensagem" placeholder="Como podemos te ajudar?"> </textarea>
+            <div id=limitMsg></div>
 
             <div class="erro"><?php if (isset($cliente->erro["erro_mensagem"])) {
                                 echo $cliente->erro["erro_mensagem"];
@@ -381,6 +382,7 @@ if (isset($_POST['nome']) && isset($_POST['email']) && isset($_POST['telefone'])
   <script src="js/scrollspy.js"></script>
   <script src="js/scrollSuave.js"></script>
   <script src="js/menu.js"></script>
+  <script src="js/contCaracteres.js"></script>
   <script src="js/jquery-3.6.0.min.js"></script>
   <script src="js/jquery.mask.js"></script>
   <script>

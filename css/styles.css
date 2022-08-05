@@ -295,6 +295,13 @@ p {
 .headline-form-group textarea:focus {
   border: 2px solid #F57F17;
 }
+.headline-form-group #limitMsg {
+  position: absolute;
+  top: 135px;
+  right: 20;
+  font-size: 0.75rem;
+  color: #808080;
+}
 
 .erro-geral {
   background: #F57F17;
@@ -627,6 +634,9 @@ p {
   }
   .headline-form-group-label {
     font-size: 0.75rem;
+  }
+  .headline-form-group #limitMsg {
+    top: 80px;
   }
   .sobre {
     justify-content: space-around;
