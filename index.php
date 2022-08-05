@@ -57,7 +57,7 @@ if (isset($_POST['nome']) && isset($_POST['email']) && isset($_POST['telefone'])
         
         Atenciosamente,
         
-        Equipe Design.'
+        Equipe Design.';
 
         // "Mensagem enviada através do site Design, segue as informações abaixo: <br>
         // Nome: ".$nome."<br>
