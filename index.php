@@ -5,9 +5,8 @@ require_once('autoload.php');
 // REQUERIMENTO DO PHPMAILER
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
-
-require 'config/PHPMailer/src/Exception.php';
-require 'config/PHPMailer/src/SMTP.php';
+require 'class/config/PHPMailer/src/Exception.php';
+require 'class/config/PHPMailer/src/SMTP.php';
 
 if (isset($_POST['nome']) && isset($_POST['email']) && isset($_POST['telefone']) && isset($_POST['mensagem'])) {
 
