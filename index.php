@@ -51,10 +51,18 @@ if (isset($_POST['nome']) && isset($_POST['email']) && isset($_POST['telefone'])
         $mail->isHTML(true); //CORPO do email com HTML
         $mail->CharSet = 'UTF-8';
         $mail->Subject = 'Atendimento ao cliente!'; //titulo do email
-        $mail->Body    = "Mensagem enviada através do site Design, segue as informações abaixo: <br>
-        Nome: ".$nome."<br>
-        E-mail: ".$email."<br>
-        Mensagem: ".$mensagem."";
+        $mail->Body    = 'Olá '.$nome.'! <br>
+        Obrigado por entrar em contato conosco!<br>
+        Logo, um de nossos atendentes irá responder sua mensagem.
+        
+        Atenciosamente,
+        
+        Equipe Design.'
+
+        // "Mensagem enviada através do site Design, segue as informações abaixo: <br>
+        // Nome: ".$nome."<br>
+        // E-mail: ".$email."<br>
+        // Mensagem: ".$mensagem."";
 
 
         $mail->send();
