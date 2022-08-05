@@ -46,6 +46,7 @@ if (isset($_POST['nome']) && isset($_POST['email']) && isset($_POST['telefone'])
         $mail->Body    = '<h1>Por favor confirme seu e-mail abaixo</h1><br><br><a style ="background:green;color:white;padding:20px;border-radius:5px;text-decoration:none;"href="https://seusistema.com.br/confirmacao.php?cod_confirm=' . "'>Confirmar E-mail</a>";
 
         $mail->send();
+        header('location: index.php');
       } catch (Exception $e) {
         echo "Houve um problema ao enviar e-mail de confirmação: {$mail->ErrorInfo}";
       }
