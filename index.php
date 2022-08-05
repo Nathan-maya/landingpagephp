@@ -5,7 +5,9 @@ require_once('autoload.php');
 // REQUERIMENTO DO PHPMAILER
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
+
 require 'class/PHPMailer/src/Exception.php';
+require 'class/PHPMailer/src/PHPMailer.php';
 require 'class/PHPMailer/src/SMTP.php';
 
 if (isset($_POST['nome']) && isset($_POST['email']) && isset($_POST['telefone']) && isset($_POST['mensagem'])) {
@@ -33,6 +35,7 @@ if (isset($_POST['nome']) && isset($_POST['email']) && isset($_POST['telefone'])
       //inserir
       $cliente->insert();
       $mail = new PHPMailer(true);
+      echo $mail;
       try {
         //Recipients
         $mail->setFrom('sistema@emailsistema.com', 'Sitema de Login'); //qm esta mandando email
@@ -75,12 +78,12 @@ if (isset($_POST['nome']) && isset($_POST['email']) && isset($_POST['telefone'])
 </head>
 
 <body>
-  <!-- <div class="ring-bg">
+  <div class="ring-bg">
       <div class="ring">
         <div class="ring-count" data-target="100" ></div>
         <span class="ring-span"></span>
       </div>
-    </div> -->
+    </div>
 
 
 
