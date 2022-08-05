@@ -2,6 +2,7 @@
 const menuNav = document.querySelectorAll('.nav-link[href^="#"]');
 const btnMobileScroll = document.getElementById('btn-mobile');
 
+//Quando o usuario clicar, realiar a funcao scrollSuave
 menuNav.forEach((acao) => {
   acao.addEventListener('click', scrollSuave);
 });
@@ -15,7 +16,6 @@ function scrollSuave(event) {
   const navScroll = document.querySelector('.menu-nav')
   navScroll.classList.toggle('active')
   
-
   window.scroll({
     top: section.offsetTop - 80,
     behavior:"smooth"

@@ -2,11 +2,12 @@ const section = document.querySelectorAll('section');
 const link = document.querySelectorAll('.nav-link');
 let time = null;
 
-
+//Verificando e informando ao usuario onde ele esta na tela
 function scrollSpy() {
   //Debounce
   clearInterval(time);
   time = setTimeout(() => {
+    //Passando por cada secao e verificando a localizacao
     section.forEach((sec) => {
       let top = window.scrollY;
       let offset = sec.offsetTop - 200;

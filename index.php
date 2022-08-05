@@ -38,20 +38,21 @@ if (isset($_POST['nome']) && isset($_POST['email']) && isset($_POST['telefone'])
       //inserir
       $cliente->insert();
       $mail = new PHPMailer(true);
-
+      
+      //Tentar enviar email
       try {
         $mail->isSMTP();   //Send using SMTP        
         $mail->CharSet = 'UTF-8';
         $mail->Encoding = 'base64';                                 
-        $mail->Host       = 'smtp.gmail.com';                     //Set the SMTP server to send through
-        $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
-        $mail->Username   = 'nathan.maia99@gmail.com';                     //SMTP username
-        $mail->Password   = 'fnxbogfwrjvjdkid';                               //SMTP password
-        $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
+        $mail->Host       = 'smtp.gmail.com';                     //definindo SMTP server de envio
+        $mail->SMTPAuth   = true;                                   
+        $mail->Username   = 'nathan.maia99@gmail.com';                     //login do email 
+        $mail->Password   = 'fnxbogfwrjvjdkid';                               //senha de app
+        $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            
         $mail->Port       = 465;
         //Recipients
         $mail->setFrom('nathan.maia99@gmail.com', 'Mensagem do Cliente'); //qm esta mandando email
-        $mail->addAddress($email, $nome, 0);     //Add a recipient
+        $mail->addAddress($email, $nome, 0);     //Enviando para o cliente
         //Content
         $mail->isHTML(true); //CORPO do email com HTML
         $mail->Subject = 'Atendimento ao cliente!'; //titulo do email
@@ -62,12 +63,6 @@ if (isset($_POST['nome']) && isset($_POST['email']) && isset($_POST['telefone'])
         Atenciosamente,<br><br>
         
         Equipe Design.';
-
-        // "Mensagem enviada através do site Design, segue as informações abaixo: <br>
-        // Nome: ".$nome."<br>
-        // E-mail: ".$email."<br>
-        // Mensagem: ".$mensagem."";
-
 
         $mail->send();
         $_POST['nome'] = '';
@@ -103,6 +98,7 @@ if (isset($_POST['nome']) && isset($_POST['email']) && isset($_POST['telefone'])
 </head>
 
 <body>
+  <!-- Preloader -->
   <div class="ring-bg">
     <div class="ring">
       <div class="ring-count" data-target="100"></div>
@@ -111,7 +107,7 @@ if (isset($_POST['nome']) && isset($_POST['email']) && isset($_POST['telefone'])
   </div>
 
 
-
+  <!-- background dos dados da empresa -->
   <div class="superinfo-bg">
     <div class="superinfo">
       <p>Seg / Sex - 08:00 ás 18:00</p>
@@ -120,14 +116,20 @@ if (isset($_POST['nome']) && isset($_POST['email']) && isset($_POST['telefone'])
     </div>
   </div>
 
+  <!-- Menu -->
   <header class="menu-bg">
+    <!-- area do logotipo -->
     <div class="menu">
       <div class="menu-logo">
         <a href="#">Design</a>
       </div>
+
+      <!-- links de navegacao -->
       <nav class="menu-nav">
+        <!-- botão mobile aparece em ate 560px, depois display none -->
         <button id="btn-mobile"> <span id="hamburguer"></span></button>
 
+        <!-- area de todos os links do menu -->
         <ul id="menu-link">
           <li><a class="nav-link active" href="#home">Home</a></li>
           <li><a class="nav-link" href="#sobre">Sobre</a></li>
@@ -139,7 +141,10 @@ if (isset($_POST['nome']) && isset($_POST['email']) && isset($_POST['telefone'])
 
   </header>
 
+  
+  <!-- Primeira secao de contato do usuario -->
   <section id="home" class="headline-bg">
+
     <div class="headline">
       <div class="headline-body">
         <h1 class="headline-body-title">
@@ -153,11 +158,19 @@ if (isset($_POST['nome']) && isset($_POST['email']) && isset($_POST['telefone'])
           ab?"
         </p>
       </div>
+
+      <!-- Formulário -->
       <div class="headline-contForm">
+
+        <!-- Formulario com metodo post -->
         <form method="POST" class="headline-form">
 
           <h2 class="headline-form-title">Chamada para ação</h2>
           <div class="headline-form-group">
+
+            <!-- Verificando se apos o usuario enviar os dados houve algum erro
+            caso tenha ocorrido, irá mostrar uma mensagem informando qual
+            Apos o erro, sera mantido os valores no input, para que nao seja necessario escrever tudo novamente -->
             <input <?php if (isset($usuario->erro["erro_nome"]) or isset($erro_geral)) {
                       echo $erro_geral;
                     } ?> name="nome" type="text" placeholder=" " class="headline-form-group-input" required <?php if (isset($_POST['nome'])) {
@@ -212,6 +225,7 @@ if (isset($_POST['nome']) && isset($_POST['email']) && isset($_POST['telefone'])
     </div>
   </section>
 
+  <!-- Informacoes sobre produtos/empresa-->
   <section id="sobre" class="sobre">
     <div class="sobre-container">
       <img class="sobre-container-img" src="https://picsum.photos/500/400" alt="" />
@@ -225,7 +239,9 @@ if (isset($_POST['nome']) && isset($_POST['email']) && isset($_POST['telefone'])
     </div>
   </section>
 
+    <!-- Informacoes sobre serviços-->
   <section id="servicos" class="servicos-bg">
+
     <div class="servicos">
       <h2>Com este serviço você: </h2>
       <div class="servicos-vantagens">
@@ -239,6 +255,7 @@ if (isset($_POST['nome']) && isset($_POST['email']) && isset($_POST['telefone'])
         </div>
 
       </div>
+
       <div class="servicos-vantagens">
         <img src="https://picsum.photos/200/300" alt="" />
         <div class="servicos-vantagens-body">
@@ -296,6 +313,7 @@ if (isset($_POST['nome']) && isset($_POST['email']) && isset($_POST['telefone'])
     </div>
   </section>
 
+  <!-- Secao com as duvidas mais frequentes do usuario -->
   <section id="faq" class="faq">
     <h2 class="faq-title">Perguntas Frequentes</h2>
     <div class=faq-acordion>
@@ -352,6 +370,8 @@ if (isset($_POST['nome']) && isset($_POST['email']) && isset($_POST['telefone'])
     </div>
   </section>
 
+  <!-- Capturando a atencao do usuario com uma nova chamada -->
+
   <section id="cadastrar" class="chamada-bg">
     <div class="chamada">
 
@@ -362,12 +382,13 @@ if (isset($_POST['nome']) && isset($_POST['email']) && isset($_POST['telefone'])
       <div class="chamada-acao">
         <p class="chamada-acao-descricao">Descrição chamando para ultima ação. Converse com nossa equipe sem
           compromisso. Não perca a chance de ... </p>
-        <a class="chamada-acao-btn" href="">Chamada para ação</a>
+        <a class="chamada-acao-btn" href="#">Chamada para ação</a>
         <p class="chamada-acao-contato">Nossos especilistas vão entrar em contato com você ainda hoje! </p>
       </div>
     </div>
   </section>
 
+  <!-- footer com nome da empresa e direitos reservados -->
   <footer class="footer-bg">
     <div class="footer">
       <p class="footer-direitos">Design &copy Todos os direitos reservados - 2022</p>
@@ -379,7 +400,7 @@ if (isset($_POST['nome']) && isset($_POST['email']) && isset($_POST['telefone'])
   </footer>
 
 
-
+  <!-- carregamento dos scripts necessarios                             -->
   <script src="js/loader.js"></script>
   <script src="js/accordion.js"></script>
   <script src="js/scrollspy.js"></script>
