@@ -79,7 +79,7 @@ if (isset($_POST['nome']) && isset($_POST['email']) && isset($_POST['telefone'])
 $captcha = isset($_POST['g-recaptcha-response']) ? $_POST['g-recaptcha-response'] : null;
  
 if(!is_null($captcha)){
-	$res = json_decode(file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret=6LfpklIhAAAAAL2vuw8agNA4mkK_5--jkmHszDUY&response=".$captcha."&remoteip=".$_SERVER['REMOTE_ADDR']));
+	$res = json_decode(file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret=6LfpklIhAAAAAD-8g09oTDSE8FtGyO__8gq6tFef&response=".$captcha."&remoteip=".$_SERVER['REMOTE_ADDR']));
 	if($res->success === true){
 		//CAPTCHA validado!!!
 		echo 'Tudo certo =)';
@@ -232,7 +232,7 @@ if(!is_null($captcha)){
                                 echo $cliente->erro["erro_mensagem"];
                               } ?></div>
           </div>
-          <div class="g-recaptcha" data-sitekey="6LfpklIhAAAAAD-8g09oTDSE8FtGyO__8gq6tFef"></div>
+          <div class="g-recaptcha" data-sitekey="6LfpklIhAAAAAL2vuw8agNA4mkK_5--jkmHszDUY"></div>
           <button class="btn" type="submit">Carregar</button>
         </form>
       </div>
