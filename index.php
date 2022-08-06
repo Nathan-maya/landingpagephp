@@ -220,13 +220,12 @@ if (isset($_POST['nome']) && isset($_POST['email']) && isset($_POST['telefone'])
                                 echo $cliente->erro["erro_mensagem"];
                               } ?></div>
           </div>
-          <div class="g-recaptcha erro" data-sitekey="6LfpklIhAAAAAD-8g09oTDSE8FtGyO__8gq6tFef">
-            <?php 
-            if(isset($erro_recaptcha['erro_recaptcha'])){
-              echo $erro_recaptcha['erro_recaptcha'];
-            }
-            ?>
-          </div>
+          <div class="g-recaptcha" data-sitekey="6LfpklIhAAAAAD-8g09oTDSE8FtGyO__8gq6tFef"></div>
+          <div class="erro"> <?php
+                              if (isset($erro_recaptcha['erro_recaptcha'])) {
+                                echo $erro_recaptcha['erro_recaptcha'];
+                              }
+                              ?></div>
           <button class="btn" type="submit">Carregar</button>
         </form>
       </div>
