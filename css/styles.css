@@ -507,6 +507,7 @@ p {
 }
 .chamada-text p {
   font-size: 1.125rem;
+  color: #FCF8F2;
 }
 .chamada-acao {
   border-radius: 5px;
@@ -779,6 +780,7 @@ p {
   }
   .chamada-text p {
     font-size: 1rem;
+    color: #FCF8F2;
   }
   .chamada-acao {
     flex: 1 1 100%;
