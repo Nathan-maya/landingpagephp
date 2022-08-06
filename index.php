@@ -37,7 +37,7 @@ if ($_POST) {
 
   //Sucesso do recaptcha
   $sucesso = $responseArray['sucess'] ?? false;
-  echo $sucesso;
+  var_dump($sucesso);
 
   if ($sucesso) {
     if (isset($_POST['nome']) && isset($_POST['email']) && isset($_POST['telefone']) && isset($_POST['mensagem'])) {
@@ -104,10 +104,7 @@ if ($_POST) {
       }
     }
   }
-} else {
-  echo 'RECAPTCHA INVÁLIDO';
 }
-
 
 
 ?>
