@@ -13,9 +13,6 @@ require 'class/PHPMailer/src/SMTP.php';
 
 // validando recaptcha
 if ($_POST) {
-  echo "<pre>";
-  print_r($_POST);
-  echo("</pre>");
   //CURL
   $curl = curl_init();
   //DEFINICOES DE REQUISICAO COM CURL
@@ -41,7 +38,7 @@ if ($_POST) {
   //Sucesso do recaptcha
   $sucesso = $responseArray['success'] ?? false;
 
-  echo $sucesso ? 'Usuario cadastrado com sucesso' : 'Recaptcha inválido';
+  // echo $sucesso ? 'Usuario cadastrado com sucesso' : 'Recaptcha inválido';
 
   if ($sucesso) {
     if (isset($_POST['nome']) && isset($_POST['email']) && isset($_POST['telefone']) && isset($_POST['mensagem'])) {
