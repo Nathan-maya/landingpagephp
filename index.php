@@ -5,13 +5,6 @@ require_once('autoload.php');
 require_once('verificar.php');
 
 // REQUERIMENTO DO PHPMAILER
-use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\Exception;
-
-require 'class/PHPMailer/src/Exception.php';
-require 'class/PHPMailer/src/PHPMailer.php';
-require 'class/PHPMailer/src/SMTP.php';
-
 
 
 ?>

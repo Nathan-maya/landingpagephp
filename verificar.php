@@ -1,6 +1,16 @@
 <?php
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
+require 'class/PHPMailer/src/Exception.php';
+require 'class/PHPMailer/src/PHPMailer.php';
+require 'class/PHPMailer/src/SMTP.php';
+
+
 $captcha = isset($_POST['g-recaptcha-response']) ? $_POST['g-recaptcha-response'] : null;
 $erro_recaptcha = $GLOBALS;
+
 if (!is_null($captcha)) {
 	$res = json_decode(file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret=6LfpklIhAAAAAL2vuw8agNA4mkK_5--jkmHszDUY&response=" . $captcha . "&remoteip=" . $_SERVER['REMOTE_ADDR']));
 	if ($res->success === true) {
@@ -15,24 +25,24 @@ if (!is_null($captcha)) {
 			$telefone = str_replace(')', '', $telefone);
 			$telefone = str_replace('-', '', $telefone);
 			$mensagem = limpaPost($_POST['mensagem']);
-		
-		
+
+
 			//Verificar se os valores do post estão vazios
 			if (empty($nome) || empty($email) || empty($telefone) || empty($mensagem)) {
 				$erro_geral = "Todos os campos são obrigatórios";
 			} else {
 				//Instanciar a classe Formulario
 				$cliente = new Formulario($nome, $email, $telefone, $mensagem);
-		
+
 				//Validar formulario
 				$cliente->validar_formulario();
-		
+
 				//se não houver erros:
 				if (empty($cliente->erro)) {
 					//inserir
 					$cliente->insert();
 					$mail = new PHPMailer(true);
-		
+
 					//Tentar enviar email
 					try {
 						$mail->isSMTP();   //Send using SMTP        
@@ -57,7 +67,7 @@ if (!is_null($captcha)) {
 						Atenciosamente,<br><br>
 						
 						Equipe Design.';
-		
+
 						$mail->send();
 						$_POST['nome'] = '';
 						$_POST['email'] = '';
