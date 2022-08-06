@@ -223,7 +223,7 @@ if (isset($_POST['nome']) && isset($_POST['email']) && isset($_POST['telefone'])
           <div class="g-recaptcha" data-sitekey="6LfpklIhAAAAAD-8g09oTDSE8FtGyO__8gq6tFef"></div>
           <div class="erro"> <?php
                               if (isset($erro_recaptcha['erro_recaptcha'])) {
-                                echo $erro_recaptcha['erro_recaptcha'];
+                                echo 'erro';
                               }
                               ?></div>
           <button class="btn" type="submit">Carregar</button>
