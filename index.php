@@ -89,9 +89,6 @@ if(!is_null($captcha)){
 		echo 'Erro ao validar o captcha!!!';
 	}
 }
-else{
-	echo 'Captcha não preenchido!';
-}
 ?>
 
 <!DOCTYPE html>
