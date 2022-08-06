@@ -37,7 +37,7 @@ if ($_POST) {
   $responseArray['sucess'] = json_decode($response, true);
 
   //Sucesso do recaptcha
-  $sucesso = $responseArray['sucess'] ?? true;
+  $sucesso = $responseArray['sucess'] ?? false;
 
   echo $sucesso ? 'Usuario cadastrado com sucesso' : 'Recaptcha inválido';
 
