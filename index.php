@@ -11,15 +11,44 @@ require 'class/PHPMailer/src/Exception.php';
 require 'class/PHPMailer/src/PHPMailer.php';
 require 'class/PHPMailer/src/SMTP.php';
 
+// validando recaptcha
+if ($_POST) {
+  //CURL
+  $curl = curl_init();
+  //DEFINICOES DE REQUISICAO COM CURL
+  curl_setopt_array($curl, [
+    CURLOPT_URL => ' https://www.google.com/recaptcha/api/siteverify',
+    CURLOPT_RETURNTRANSFER => true,
+    CURLOPT_CUSTOMREQUEST => 'POST',
+    CURLOPT_POSTFIELDS => [
+      'secret' => '6LfpklIhAAAAAL2vuw8agNA4mkK_5--jkmHszDUY',
+      'response' => $_POST['g-recaptcha-response'] ?? ''
+    ]
+
+  ]);
+  //Executando a requisição
+  $response = curl_exec($curl);
+
+  //FECHA A CONEXAO
+  curl_close($curl);
+
+  // response sem array
+  $responseArray = json_decode($response,true);
+
+  //Sucesso do recaptcha
+  $sucesso = $responseArray['sucess'] ?? false;
+}
+
+
 if (isset($_POST['nome']) && isset($_POST['email']) && isset($_POST['telefone']) && isset($_POST['mensagem'])) {
 
   //RECEBER VALORES VINDO DO POST E LIMPAR
   $nome = limpaPost($_POST['nome']);
   $email = limpaPost($_POST['email']);
   $telefone = limpaPost($_POST['telefone']);
-  $telefone = str_replace('(','',$telefone);
-  $telefone = str_replace(')','',$telefone);
-  $telefone = str_replace('-','',$telefone);
+  $telefone = str_replace('(', '', $telefone);
+  $telefone = str_replace(')', '', $telefone);
+  $telefone = str_replace('-', '', $telefone);
   $mensagem = limpaPost($_POST['mensagem']);
 
 
@@ -38,17 +67,17 @@ if (isset($_POST['nome']) && isset($_POST['email']) && isset($_POST['telefone'])
       //inserir
       $cliente->insert();
       $mail = new PHPMailer(true);
-      
+
       //Tentar enviar email
       try {
         $mail->isSMTP();   //Send using SMTP        
         $mail->CharSet = 'UTF-8';
-        $mail->Encoding = 'base64';                                 
+        $mail->Encoding = 'base64';
         $mail->Host       = 'smtp.gmail.com';                     //definindo SMTP server de envio
-        $mail->SMTPAuth   = true;                                   
+        $mail->SMTPAuth   = true;
         $mail->Username   = 'nathan.maia99@gmail.com';                     //login do email 
         $mail->Password   = 'fnxbogfwrjvjdkid';                               //senha de app
-        $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            
+        $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
         $mail->Port       = 465;
         //Recipients
         $mail->setFrom('nathan.maia99@gmail.com', 'Mensagem do Cliente'); //qm esta mandando email
@@ -68,7 +97,6 @@ if (isset($_POST['nome']) && isset($_POST['email']) && isset($_POST['telefone'])
         $_POST['nome'] = '';
         $_POST['email'] = '';
         $_POST['telefone'] = '';
-
       } catch (Exception $e) {
         echo "Houve um problema ao enviar e-mail de confirmação: {$mail->ErrorInfo}";
       }
@@ -84,6 +112,7 @@ if (isset($_POST['nome']) && isset($_POST['email']) && isset($_POST['telefone'])
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src='https://www.google.com/recaptcha/api.js'></script>
 
   <!-- google fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -141,7 +170,7 @@ if (isset($_POST['nome']) && isset($_POST['email']) && isset($_POST['telefone'])
 
   </header>
 
-  
+
   <!-- Primeira secao de contato do usuario -->
   <section id="home" class="headline-bg">
 
@@ -176,7 +205,7 @@ if (isset($_POST['nome']) && isset($_POST['email']) && isset($_POST['telefone'])
                     } ?> name="nome" type="text" placeholder=" " class="headline-form-group-input" required <?php if (isset($_POST['nome'])) {
                                                                                                               echo "value=" .
                                                                                                                 $_POST['nome'] . "";
-                                                                                                            } ?> >
+                                                                                                            } ?>>
             <label class="headline-form-group-label">NOME</label>
             <div class="erro"><?php if (isset($cliente->erro["erro_nome"])) {
                                 echo $cliente->erro["erro_nome"];
@@ -188,7 +217,7 @@ if (isset($_POST['nome']) && isset($_POST['email']) && isset($_POST['telefone'])
                     } ?>type="email" name="email" placeholder=" " class=" headline-form-group-input" required <?php if (isset($_POST['email'])) {
                                                                                                                 echo "value=" .
                                                                                                                   $_POST['email'] . "";
-                                                                                                              } ?> >
+                                                                                                              } ?>>
             <label class="headline-form-group-label">E-MAIL: </label>
             <div class="erro"><?php if (isset($cliente->erro["erro_email"])) {
                                 echo $cliente->erro["erro_email"];
@@ -197,11 +226,11 @@ if (isset($_POST['nome']) && isset($_POST['email']) && isset($_POST['telefone'])
           </div>
           <div class="headline-form-group">
             <input id="celular" maxlength="12" <?php if (isset($usuario->erro["erro_telefone"]) or isset($erro_geral)) {
-                                  echo $erro_geral;
-                                } ?>type="text" name="telefone" placeholder=" " class="headline-form-group-input" required <?php if (isset($_POST['telefone'])) {
-                                                                                                                  echo "value=" .
-                                                                                                                    $_POST['telefone'] . "";
-                                                                                                                } ?> >
+                                                  echo $erro_geral;
+                                                } ?>type="text" name="telefone" placeholder=" " class="headline-form-group-input" required <?php if (isset($_POST['telefone'])) {
+                                                                                                                              echo "value=" .
+                                                                                                                                $_POST['telefone'] . "";
+                                                                                                                            } ?>>
             <label class="headline-form-group-label">DDD + TELEFONE: </label>
             <div class="erro"><?php if (isset($cliente->erro["erro_telefone"])) {
                                 echo $cliente->erro["erro_telefone"];
@@ -210,15 +239,15 @@ if (isset($_POST['nome']) && isset($_POST['email']) && isset($_POST['telefone'])
           </div>
           <div class="headline-form-group">
             <textarea id="mensagem" maxlength="500" <?php if (isset($usuario->erro["erro_mensagem"]) or isset($erro_geral)) {
-                        echo $erro_geral;
-                      } ?>name="mensagem" placeholder="Como podemos te ajudar?"> </textarea>
+                                                      echo $erro_geral;
+                                                    } ?>name="mensagem" placeholder="Como podemos te ajudar?"> </textarea>
             <div id=limitMsg></div>
 
             <div class="erro"><?php if (isset($cliente->erro["erro_mensagem"])) {
                                 echo $cliente->erro["erro_mensagem"];
                               } ?></div>
           </div>
-
+          <div class="g-recaptcha" data-sitekey="6LfpklIhAAAAAD-8g09oTDSE8FtGyO__8gq6tFef"></div>
           <button class="btn" type="submit">Carregar</button>
         </form>
       </div>
@@ -239,7 +268,7 @@ if (isset($_POST['nome']) && isset($_POST['email']) && isset($_POST['telefone'])
     </div>
   </section>
 
-    <!-- Informacoes sobre serviços-->
+  <!-- Informacoes sobre serviços-->
   <section id="servicos" class="servicos-bg">
 
     <div class="servicos">
@@ -411,6 +440,16 @@ if (isset($_POST['nome']) && isset($_POST['email']) && isset($_POST['telefone'])
   <script src="js/jquery.mask.js"></script>
   <script>
     $("#celular").mask("(00)00000-0000")
+  </script>
+  <script>
+    function validarPost() {
+      // VERIFICAR SE O RECAPTCHA FOI SELECIONADO
+      if (grecaptcha.getResponse() != "") return true;
+
+      //Erro não selecionado
+      alert('Selecione a caixa de "não sou um robô" ')
+      return false;
+    }
   </script>
 </body>
 
