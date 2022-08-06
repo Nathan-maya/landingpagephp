@@ -75,19 +75,7 @@ if (isset($_POST['nome']) && isset($_POST['email']) && isset($_POST['telefone'])
     }
   }
 }
- 
-$captcha = isset($_POST['g-recaptcha-response']) ? $_POST['g-recaptcha-response'] : null;
- 
-if(!is_null($captcha)){
-	$res = json_decode(file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret=6LfpklIhAAAAAD-8g09oTDSE8FtGyO__8gq6tFef&response=".$captcha."&remoteip=".$_SERVER['REMOTE_ADDR']));
-	if($res->success === true){
-		//CAPTCHA validado!!!
-		echo 'Tudo certo =)';
-	}
-	else{
-		echo 'Erro ao validar o captcha!!!';
-	}
-}
+
 ?>
 
 <!DOCTYPE html>
@@ -97,7 +85,7 @@ if(!is_null($captcha)){
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <script src='https://www.google.com/recaptcha/api.js'></script>
+
 
   <!-- google fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -108,6 +96,7 @@ if(!is_null($captcha)){
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" integrity="sha512-1sCRPdkRXhBV2PBLUdRb4tMg1w2YPf37qatUFeS7zlBy7jJI8Lf4VHwWfZZfpXtYSLy85pkm9GaYVYMfw5BC1A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <!-- Estilo de Aplicacao -->
   <link rel="stylesheet" href="css/styles.css" />
+  <script src='https://www.google.com/recaptcha/api.js'></script>
   <title>Design</title>
 </head>
 
@@ -177,7 +166,7 @@ if(!is_null($captcha)){
       <div class="headline-contForm">
 
         <!-- Formulario com metodo post -->
-        <form method="POST" class="headline-form">
+        <form method="POST" action="verificar.php" class="headline-form">
 
           <h2 class="headline-form-title">Chamada para ação</h2>
           <div class="headline-form-group">
@@ -232,7 +221,7 @@ if(!is_null($captcha)){
                                 echo $cliente->erro["erro_mensagem"];
                               } ?></div>
           </div>
-          <div class="g-recaptcha" data-sitekey="6LfpklIhAAAAAL2vuw8agNA4mkK_5--jkmHszDUY"></div>
+          <div class="g-recaptcha" data-sitekey="6LfpklIhAAAAAD-8g09oTDSE8FtGyO__8gq6tFef"></div>
           <button class="btn" type="submit">Carregar</button>
         </form>
       </div>
