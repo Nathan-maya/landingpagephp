@@ -34,10 +34,12 @@ if ($_POST) {
   curl_close($curl);
 
   // response sem array
-  $responseArray = json_decode($response, true);
+  $responseArray['sucess'] = json_decode($response, true);
 
   //Sucesso do recaptcha
   $sucesso = $responseArray['sucess'] ?? true;
+
+  echo $sucesso ? 'Usuario cadastrado com sucesso' : 'Recaptcha inválido';
 
   if ($sucesso) {
     if (isset($_POST['nome']) && isset($_POST['email']) && isset($_POST['telefone']) && isset($_POST['mensagem'])) {
