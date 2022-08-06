@@ -33,7 +33,7 @@ if ($_POST) {
   curl_close($curl);
 
   // response sem array
-  $responseArray = json_decode($response,true);
+  $responseArray = json_decode($response, true);
 
   //Sucesso do recaptcha
   $sucesso = $responseArray['sucess'] ?? false;
@@ -228,9 +228,9 @@ if (isset($_POST['nome']) && isset($_POST['email']) && isset($_POST['telefone'])
             <input id="celular" maxlength="12" <?php if (isset($usuario->erro["erro_telefone"]) or isset($erro_geral)) {
                                                   echo $erro_geral;
                                                 } ?>type="text" name="telefone" placeholder=" " class="headline-form-group-input" required <?php if (isset($_POST['telefone'])) {
-                                                                                                                              echo "value=" .
-                                                                                                                                $_POST['telefone'] . "";
-                                                                                                                            } ?>>
+                                                                                                                                              echo "value=" .
+                                                                                                                                                $_POST['telefone'] . "";
+                                                                                                                                            } ?>>
             <label class="headline-form-group-label">DDD + TELEFONE: </label>
             <div class="erro"><?php if (isset($cliente->erro["erro_telefone"])) {
                                 echo $cliente->erro["erro_telefone"];
