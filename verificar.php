@@ -9,6 +9,7 @@ if(!is_null($captcha)){
 	}
 	else{
 		return $erro_recaptcha['erro_recaptcha'] = 'reCAPTCHA inválido!';
+		header('location: index.php');
 	}
 }
 ?>
