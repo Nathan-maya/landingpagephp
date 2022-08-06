@@ -29,6 +29,7 @@ if ($_POST) {
   //Executando a requisição
   $response = curl_exec($curl);
 
+
   //FECHA A CONEXAO
   curl_close($curl);
 
@@ -36,8 +37,7 @@ if ($_POST) {
   $responseArray = json_decode($response, true);
 
   //Sucesso do recaptcha
-  $sucesso = $responseArray['sucess'] ?? false;
-  var_dump($sucesso);
+  $sucesso = $responseArray['sucess'] ?? true;
 
   if ($sucesso) {
     if (isset($_POST['nome']) && isset($_POST['email']) && isset($_POST['telefone']) && isset($_POST['mensagem'])) {
