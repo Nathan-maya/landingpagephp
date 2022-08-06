@@ -2,6 +2,7 @@
 require_once('class/config.php');
 require_once('class/Formulario.php');
 require_once('autoload.php');
+require_once('verificar.php');
 
 // REQUERIMENTO DO PHPMAILER
 use PHPMailer\PHPMailer\PHPMailer;
@@ -17,9 +18,9 @@ if (isset($_POST['nome']) && isset($_POST['email']) && isset($_POST['telefone'])
   $nome = limpaPost($_POST['nome']);
   $email = limpaPost($_POST['email']);
   $telefone = limpaPost($_POST['telefone']);
-  $telefone = str_replace('(','',$telefone);
-  $telefone = str_replace(')','',$telefone);
-  $telefone = str_replace('-','',$telefone);
+  $telefone = str_replace('(', '', $telefone);
+  $telefone = str_replace(')', '', $telefone);
+  $telefone = str_replace('-', '', $telefone);
   $mensagem = limpaPost($_POST['mensagem']);
 
 
@@ -38,17 +39,17 @@ if (isset($_POST['nome']) && isset($_POST['email']) && isset($_POST['telefone'])
       //inserir
       $cliente->insert();
       $mail = new PHPMailer(true);
-      
+
       //Tentar enviar email
       try {
         $mail->isSMTP();   //Send using SMTP        
         $mail->CharSet = 'UTF-8';
-        $mail->Encoding = 'base64';                                 
+        $mail->Encoding = 'base64';
         $mail->Host       = 'smtp.gmail.com';                     //definindo SMTP server de envio
-        $mail->SMTPAuth   = true;                                   
+        $mail->SMTPAuth   = true;
         $mail->Username   = 'nathan.maia99@gmail.com';                     //login do email 
         $mail->Password   = 'fnxbogfwrjvjdkid';                               //senha de app
-        $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            
+        $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
         $mail->Port       = 465;
         //Recipients
         $mail->setFrom('nathan.maia99@gmail.com', 'Mensagem do Cliente'); //qm esta mandando email
@@ -68,7 +69,6 @@ if (isset($_POST['nome']) && isset($_POST['email']) && isset($_POST['telefone'])
         $_POST['nome'] = '';
         $_POST['email'] = '';
         $_POST['telefone'] = '';
-
       } catch (Exception $e) {
         echo "Houve um problema ao enviar e-mail de confirmação: {$mail->ErrorInfo}";
       }
@@ -85,7 +85,7 @@ if (isset($_POST['nome']) && isset($_POST['email']) && isset($_POST['telefone'])
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
+  <script src='https://www.google.com/recaptcha/api.js'></script>
 
   <!-- google fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -96,7 +96,6 @@ if (isset($_POST['nome']) && isset($_POST['email']) && isset($_POST['telefone'])
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" integrity="sha512-1sCRPdkRXhBV2PBLUdRb4tMg1w2YPf37qatUFeS7zlBy7jJI8Lf4VHwWfZZfpXtYSLy85pkm9GaYVYMfw5BC1A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <!-- Estilo de Aplicacao -->
   <link rel="stylesheet" href="css/styles.css" />
-  <script src='https://www.google.com/recaptcha/api.js'></script>
   <title>Design</title>
 </head>
 
@@ -144,7 +143,7 @@ if (isset($_POST['nome']) && isset($_POST['email']) && isset($_POST['telefone'])
 
   </header>
 
-  
+
   <!-- Primeira secao de contato do usuario -->
   <section id="home" class="headline-bg">
 
@@ -179,7 +178,7 @@ if (isset($_POST['nome']) && isset($_POST['email']) && isset($_POST['telefone'])
                     } ?> name="nome" type="text" placeholder=" " class="headline-form-group-input" required <?php if (isset($_POST['nome'])) {
                                                                                                               echo "value=" .
                                                                                                                 $_POST['nome'] . "";
-                                                                                                            } ?> >
+                                                                                                            } ?>>
             <label class="headline-form-group-label">NOME</label>
             <div class="erro"><?php if (isset($cliente->erro["erro_nome"])) {
                                 echo $cliente->erro["erro_nome"];
@@ -191,7 +190,7 @@ if (isset($_POST['nome']) && isset($_POST['email']) && isset($_POST['telefone'])
                     } ?>type="email" name="email" placeholder=" " class=" headline-form-group-input" required <?php if (isset($_POST['email'])) {
                                                                                                                 echo "value=" .
                                                                                                                   $_POST['email'] . "";
-                                                                                                              } ?> >
+                                                                                                              } ?>>
             <label class="headline-form-group-label">E-MAIL: </label>
             <div class="erro"><?php if (isset($cliente->erro["erro_email"])) {
                                 echo $cliente->erro["erro_email"];
@@ -200,11 +199,11 @@ if (isset($_POST['nome']) && isset($_POST['email']) && isset($_POST['telefone'])
           </div>
           <div class="headline-form-group">
             <input id="celular" maxlength="12" <?php if (isset($usuario->erro["erro_telefone"]) or isset($erro_geral)) {
-                                  echo $erro_geral;
-                                } ?>type="text" name="telefone" placeholder=" " class="headline-form-group-input" required <?php if (isset($_POST['telefone'])) {
-                                                                                                                  echo "value=" .
-                                                                                                                    $_POST['telefone'] . "";
-                                                                                                                } ?> >
+                                                  echo $erro_geral;
+                                                } ?>type="text" name="telefone" placeholder=" " class="headline-form-group-input" required <?php if (isset($_POST['telefone'])) {
+                                                                                                                                              echo "value=" .
+                                                                                                                                                $_POST['telefone'] . "";
+                                                                                                                                            } ?>>
             <label class="headline-form-group-label">DDD + TELEFONE: </label>
             <div class="erro"><?php if (isset($cliente->erro["erro_telefone"])) {
                                 echo $cliente->erro["erro_telefone"];
@@ -213,15 +212,21 @@ if (isset($_POST['nome']) && isset($_POST['email']) && isset($_POST['telefone'])
           </div>
           <div class="headline-form-group">
             <textarea id="mensagem" maxlength="500" <?php if (isset($usuario->erro["erro_mensagem"]) or isset($erro_geral)) {
-                        echo $erro_geral;
-                      } ?>name="mensagem" placeholder="Como podemos te ajudar?"> </textarea>
+                                                      echo $erro_geral;
+                                                    } ?>name="mensagem" placeholder="Como podemos te ajudar?"> </textarea>
             <div id=limitMsg></div>
 
             <div class="erro"><?php if (isset($cliente->erro["erro_mensagem"])) {
                                 echo $cliente->erro["erro_mensagem"];
                               } ?></div>
           </div>
-          <div class="g-recaptcha" data-sitekey="6LfpklIhAAAAAD-8g09oTDSE8FtGyO__8gq6tFef"></div>
+          <div class="g-recaptcha erro" data-sitekey="6LfpklIhAAAAAD-8g09oTDSE8FtGyO__8gq6tFef">
+            <?php 
+            if(isset($erro_recaptcha['erro_recaptcha'])){
+              echo $erro_recaptcha['erro_recaptcha'];
+            }
+            ?>
+          </div>
           <button class="btn" type="submit">Carregar</button>
         </form>
       </div>
@@ -242,7 +247,7 @@ if (isset($_POST['nome']) && isset($_POST['email']) && isset($_POST['telefone'])
     </div>
   </section>
 
-    <!-- Informacoes sobre serviços-->
+  <!-- Informacoes sobre serviços-->
   <section id="servicos" class="servicos-bg">
 
     <div class="servicos">
