@@ -21,7 +21,7 @@ if ($_POST) {
     CURLOPT_RETURNTRANSFER => true,
     CURLOPT_CUSTOMREQUEST => 'POST',
     CURLOPT_POSTFIELDS => [
-      'secret' => '6LfpklIhAAAAAD-8g09oTDSE8FtGyO__8gq6tFef',
+      'secret' => '6LfpklIhAAAAAL2vuw8agNA4mkK_5--jkmHszDUY',
       'response' => $_POST['g-recaptcha-response'] ?? ''
     ]
 
