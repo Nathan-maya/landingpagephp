@@ -7,7 +7,6 @@ if (!is_null($captcha)) {
 		//CAPTCHA validado!!!
 		header('location: index.php');
 	} else {
-		header('location: index.php');
-		return 		$erro_recaptcha['erro_recaptcha'] = 'reCAPTCHA inválido!';
+		echo 'Recaptcha inválido';
 	}
 }
