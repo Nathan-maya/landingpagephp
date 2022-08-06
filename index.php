@@ -13,11 +13,14 @@ require 'class/PHPMailer/src/SMTP.php';
 
 // validando recaptcha
 if ($_POST) {
+  echo "<pre>";
+  print_r($_POST);
+  echo("</pre>");
   //CURL
   $curl = curl_init();
   //DEFINICOES DE REQUISICAO COM CURL
   curl_setopt_array($curl, [
-    CURLOPT_URL => ' https://www.google.com/recaptcha/api/siteverify',
+    CURLOPT_URL => 'https://www.google.com/recaptcha/api/siteverify',
     CURLOPT_RETURNTRANSFER => true,
     CURLOPT_CUSTOMREQUEST => 'POST',
     CURLOPT_POSTFIELDS => [
@@ -28,7 +31,6 @@ if ($_POST) {
   ]);
   //Executando a requisição
   $response = curl_exec($curl);
-
 
   //FECHA A CONEXAO
   curl_close($curl);
@@ -119,6 +121,17 @@ if ($_POST) {
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <script src='https://www.google.com/recaptcha/api.js'></script>
+  <!-- <script>
+    function validarPost() {
+      // VERIFICAR SE O RECAPTCHA FOI SELECIONADO
+      if (grecaptcha.getResponse() != "") return true;
+
+      //Erro não selecionado
+      alert('Selecione a caixa de "não sou um robô" ')
+      return false;
+    }
+    validarPost();
+  </script> -->
 
   <!-- google fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -233,7 +246,8 @@ if ($_POST) {
           <div class="headline-form-group">
             <input id="celular" maxlength="12" <?php if (isset($usuario->erro["erro_telefone"]) or isset($erro_geral)) {
                                                   echo $erro_geral;
-                                                } ?>type="text" name="telefone" placeholder=" " class="headline-form-group-input" required <?php if (isset($_POST['telefone'])) {echo "value=" .$_POST['telefone'] . "";
+                                                } ?>type="text" name="telefone" placeholder=" " class="headline-form-group-input" required <?php if (isset($_POST['telefone'])) {
+                                                                                                                                              echo "value=" . $_POST['telefone'] . "";
                                                                                                                                             } ?>>
             <label class="headline-form-group-label">DDD + TELEFONE: </label>
             <div class="erro"><?php if (isset($cliente->erro["erro_telefone"])) {
@@ -444,16 +458,6 @@ if ($_POST) {
   <script src="js/jquery.mask.js"></script>
   <script>
     $("#celular").mask("(00)00000-0000")
-  </script>
-  <script>
-    function validarPost() {
-      // VERIFICAR SE O RECAPTCHA FOI SELECIONADO
-      if (grecaptcha.getResponse() != "") return true;
-
-      //Erro não selecionado
-      alert('Selecione a caixa de "não sou um robô" ')
-      return false;
-    }
   </script>
 </body>
 
