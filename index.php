@@ -52,6 +52,9 @@ if ($_POST) {
       $telefone = str_replace('-', '', $telefone);
       $mensagem = limpaPost($_POST['mensagem']);
 
+      if (strlen($mensagem) <= 0) {
+        $erro["erro_mensagem"] = 'Por favor, escreva uma mensagem!';
+      }
 
       //Verificar se os valores do post estão vazios
       if (empty($nome) || empty($email) || empty($telefone) || empty($mensagem)) {
@@ -95,15 +98,14 @@ if ($_POST) {
             Equipe Design.';
 
             $mail->send();
-            $_POST['nome'] = '';
-            $_POST['email'] = '';
-            $_POST['telefone'] = '';
           } catch (Exception $e) {
             echo "Houve um problema ao enviar e-mail de confirmação: {$mail->ErrorInfo}";
           }
         }
       }
     }
+  } else {
+    $erro['erro_recaptcha'] = "Por favor, valide o recaptcha!";
   }
 }
 
@@ -258,11 +260,15 @@ if ($_POST) {
                                                     } ?>name="mensagem" placeholder="Como podemos te ajudar?"> </textarea>
             <div id=limitMsg></div>
 
-            <div class="erro"><?php if (isset($cliente->erro["erro_mensagem"])) {
-                                echo $cliente->erro["erro_mensagem"];
+            <div class="erro"><?php if (isset($erro["erro_mensagem"])) {
+                                echo $erro["erro_mensagem"];
                               } ?></div>
           </div>
           <div class="g-recaptcha" data-sitekey="6LfpklIhAAAAAD-8g09oTDSE8FtGyO__8gq6tFef"></div>
+          <div class="erro"><?php if (isset($erro['erro_recaptcha'])) {
+                              echo $erro['erro_recaptcha'];
+                            } ?></div>
+
           <button class="btn" type="submit">Carregar</button>
         </form>
       </div>
