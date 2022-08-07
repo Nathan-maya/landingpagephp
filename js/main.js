@@ -95,6 +95,7 @@ function toggleMenu() {
 }
 
 btnMobile.addEventListener('click', toggleMenu);
+btnMobile.addEventListener('touchstart', toggleMenu);
 
 // scrollSpy
 const section = document.querySelectorAll('section');
