@@ -66,7 +66,6 @@ if ($_POST) {
 
         //Validar formulario
         $cliente->validar_formulario();
-        header('location: index.php');
 
         //se não houver erros:
         if (empty($cliente->erro)) {
@@ -101,14 +100,13 @@ if ($_POST) {
 
             $mail->send();
           } catch (Exception $e) {
-            header('location: index.php');
           }
         }
       }
     }
   } else {
     $erro['erro_recaptcha'] = "Por favor, valide o recaptcha!";
-    header('location: index.php');
+
   }
 }
 
