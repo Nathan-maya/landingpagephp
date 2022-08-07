@@ -200,7 +200,7 @@ if ($_POST) {
       <div class="headline-contForm">
 
         <!-- Formulario com metodo post -->
-        <form method="POST" action="verificar.php" class="headline-form">
+        <form method="POST" class="headline-form">
 
           <h2 class="headline-form-title">Chamada para ação</h2>
           <div class="headline-form-group">
