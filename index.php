@@ -3,6 +3,7 @@ require_once('class/config.php');
 require_once('class/Formulario.php');
 require_once('autoload.php');
 
+
 // REQUERIMENTO DO PHPMAILER
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
@@ -38,7 +39,6 @@ if ($_POST) {
   //Sucesso do recaptcha
   $sucesso = $responseArray['success'] ?? false;
 
-  // echo $sucesso ? 'Usuario cadastrado com sucesso' : 'Recaptcha inválido';
 
   if ($sucesso) {
     if (isset($_POST['nome']) && isset($_POST['email']) && isset($_POST['telefone']) && isset($_POST['mensagem'])) {
@@ -51,6 +51,7 @@ if ($_POST) {
       $telefone = str_replace(')', '', $telefone);
       $telefone = str_replace('-', '', $telefone);
       $mensagem = limpaPost($_POST['mensagem']);
+      $mensagem_textarea = $mensagem;
 
       if (strlen($mensagem) <= 0) {
         $erro["erro_mensagem"] = 'Por favor, escreva uma mensagem!';
@@ -65,6 +66,7 @@ if ($_POST) {
 
         //Validar formulario
         $cliente->validar_formulario();
+        header('location: index.php');
 
         //se não houver erros:
         if (empty($cliente->erro)) {
@@ -99,19 +101,18 @@ if ($_POST) {
 
             $mail->send();
           } catch (Exception $e) {
-            echo "Houve um problema ao enviar e-mail de confirmação: {$mail->ErrorInfo}";
+            header('location: index.php');
           }
         }
       }
     }
   } else {
     $erro['erro_recaptcha'] = "Por favor, valide o recaptcha!";
+    header('location: index.php');
   }
 }
 
-
 ?>
-
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -120,17 +121,6 @@ if ($_POST) {
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <script src='https://www.google.com/recaptcha/api.js'></script>
-  <!-- <script>
-    function validarPost() {
-      // VERIFICAR SE O RECAPTCHA FOI SELECIONADO
-      if (grecaptcha.getResponse() != "") return true;
-
-      //Erro não selecionado
-      alert('Selecione a caixa de "não sou um robô" ')
-      return false;
-    }
-    validarPost();
-  </script> -->
 
   <!-- google fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -146,12 +136,12 @@ if ($_POST) {
 
 <body>
   <!-- Preloader -->
-  <div class="ring-bg">
+  <!-- <div class="ring-bg">
     <div class="ring">
       <div class="ring-count" data-target="100"></div>
       <span class="ring-span"></span>
     </div>
-  </div>
+  </div> -->
 
 
   <!-- background dos dados da empresa -->
@@ -210,7 +200,7 @@ if ($_POST) {
       <div class="headline-contForm">
 
         <!-- Formulario com metodo post -->
-        <form method="POST" class="headline-form">
+        <form method="POST" action="verificar.php" class="headline-form">
 
           <h2 class="headline-form-title">Chamada para ação</h2>
           <div class="headline-form-group">
@@ -218,12 +208,12 @@ if ($_POST) {
             <!-- Verificando se apos o usuario enviar os dados houve algum erro
             caso tenha ocorrido, irá mostrar uma mensagem informando qual
             Apos o erro, sera mantido os valores no input, para que nao seja necessario escrever tudo novamente -->
-            <input <?php if (isset($usuario->erro["erro_nome"]) or isset($erro_geral)) {
-                      echo $erro_geral;
-                    } ?> name="nome" type="text" placeholder=" " class="headline-form-group-input" required <?php if (isset($_POST['nome'])) {
-                                                                                                              echo "value=" .
-                                                                                                                $_POST['nome'] . "";
-                                                                                                            } ?>>
+            <input name="nome" type="text" placeholder=" " class="headline-form-group-input" required <?php if (isset($_POST['nome'])) {
+                                                                                                        if (isset($cliente->erro) || isset($erro['erro_recaptcha'])) {
+                                                                                                          echo "value=" .
+                                                                                                            $_POST['nome'] . "";
+                                                                                                        }
+                                                                                                      } ?>>
             <label class="headline-form-group-label">NOME</label>
             <div class="erro"><?php if (isset($cliente->erro["erro_nome"])) {
                                 echo $cliente->erro["erro_nome"];
@@ -231,11 +221,10 @@ if ($_POST) {
 
           </div>
           <div class="headline-form-group">
-            <input <?php if (isset($usuario->erro["erro_email"]) or isset($erro_geral)) {
-                    } ?>type="email" name="email" placeholder=" " class=" headline-form-group-input" required <?php if (isset($_POST['email'])) {
-                                                                                                                echo "value=" .
-                                                                                                                  $_POST['email'] . "";
-                                                                                                              } ?>>
+            <input type="email" name="email" id='email' placeholder=" " class=" headline-form-group-input" required <?php if (isset($_POST['email'])) if (isset($cliente->erro) || isset($erro['erro_recaptcha'])) {
+                                                                                                                      echo "value=" .
+                                                                                                                        $_POST['email'] . "";
+                                                                                                                    } ?>>
             <label class="headline-form-group-label">E-MAIL: </label>
             <div class="erro"><?php if (isset($cliente->erro["erro_email"])) {
                                 echo $cliente->erro["erro_email"];
@@ -243,11 +232,10 @@ if ($_POST) {
 
           </div>
           <div class="headline-form-group">
-            <input id="celular" maxlength="12" <?php if (isset($usuario->erro["erro_telefone"]) or isset($erro_geral)) {
-                                                  echo $erro_geral;
-                                                } ?>type="text" name="telefone" placeholder=" " class="headline-form-group-input" required <?php if (isset($_POST['telefone'])) {
-                                                                                                                                              echo "value=" . $_POST['telefone'] . "";
-                                                                                                                                            } ?>>
+            <input id="celular" maxlength="12" type="text" name="telefone" placeholder=" " class="headline-form-group-input" required <?php if (isset($_POST['telefone']))  if (isset($cliente->erro) || isset($erro['erro_recaptcha'])) {
+                                                                                                                                        echo "value=" .
+                                                                                                                                          $_POST['telefone'] . "";
+                                                                                                                                      } ?>>
             <label class="headline-form-group-label">DDD + TELEFONE: </label>
             <div class="erro"><?php if (isset($cliente->erro["erro_telefone"])) {
                                 echo $cliente->erro["erro_telefone"];
@@ -255,9 +243,10 @@ if ($_POST) {
 
           </div>
           <div class="headline-form-group">
-            <textarea id="mensagem" maxlength="500" <?php if (isset($usuario->erro["erro_mensagem"]) or isset($erro_geral)) {
-                                                      echo $erro_geral;
-                                                    } ?>name="mensagem" placeholder="Como podemos te ajudar?"> </textarea>
+            <textarea id="mensagem" maxlength="500" name="mensagem" placeholder="Como podemos te ajudar?"><?php if (isset($_POST['mensagem'])) if (isset($cliente->erro) || isset($erro['erro_recaptcha'])) {
+                                                                                                            echo
+                                                                                                            $_POST['mensagem'];
+                                                                                                          } ?></textarea>
             <div id=limitMsg></div>
 
             <div class="erro"><?php if (isset($erro["erro_mensagem"])) {
@@ -269,7 +258,7 @@ if ($_POST) {
                               echo $erro['erro_recaptcha'];
                             } ?></div>
 
-          <button class="btn" type="submit">Carregar</button>
+          <button class="btn" type="submit">Enviar</button>
         </form>
       </div>
     </div>
@@ -278,7 +267,7 @@ if ($_POST) {
   <!-- Informacoes sobre produtos/empresa-->
   <section id="sobre" class="sobre">
     <div class="sobre-container">
-      <img class="sobre-container-img" src="https://picsum.photos/500/400" alt="" />
+      <img class="sobre-container-img" src="https://picsum.photos/500/400" alt=" imagem sobre quem somos" />
     </div>
     <div class="sobre-container">
       <h2 class="sobre-container-title">Quem Somos</h2>
@@ -456,12 +445,13 @@ if ($_POST) {
   <script src="js/scrollspy.js"></script>
   <script src="js/scrollSuave.js"></script>
   <script src="js/menu.js"></script>
-  <script src="js/contCaracteres.js"></script>
   <script src="js/jquery-3.6.0.min.js"></script>
   <script src="js/jquery.mask.js"></script>
   <script>
     $("#celular").mask("(00)00000-0000")
   </script>
+  <script src="js/inputLabelEmail.js"></script>
+  <script src="js/contCaracteres.js"></script>
 </body>
 
 </html>

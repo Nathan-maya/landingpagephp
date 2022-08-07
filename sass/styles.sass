@@ -257,6 +257,15 @@ p
         border-right: 2px solid variables.$primary-color
         letter-spacing: 0.1rem
 
+      &-input.active ~ &-label
+        transform: translateX(10px) translateY(-7px)
+        font-size: 0.65rem
+        padding: 0 10px
+        background: variables.$text-color
+        border-left: 2px solid variables.$primary-color
+        border-right: 2px solid variables.$primary-color
+        letter-spacing: 0.1rem
+
       &-input:focus
         border: 2px solid variables.$primary-color
 
@@ -559,7 +568,6 @@ p
       padding: 40px 30px 40px 30px
       &-btn
         padding: 10px 40px
-
 
 // Media ate 720
 
